@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum MarginBucket {
+  M5
+  M10
+  M15
+  M20
+  M25
+  M30
+  M30PLUS
+}
+
+enum GameStatus {
+  SCHEDULED
+  FINAL
+}
+
+model Participant {
+  id        String   @id @default(cuid())
+  name      String
+  pinHash   String
+  isAdmin   Boolean  @default(false)
+  isPro     Boolean  @default(false)
+  createdAt DateTime @default(now())
+  picks     Pick[]
+}
+
+model Round {
+  id        String   @id @default(cuid())
+  name      String   // ex: "Wild Card", "Divisional", "Semifinal", "Final"
+  order     Int
+  isActive  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  games     Game[]
+}
+
+model Game {
+  id         String     @id @default(cuid())
+  roundId    String
+  round      Round      @relation(fields: [roundId], references: [id])
+  homeTeam   String
+  awayTeam   String
+  startAt    DateTime
+  lockAt     DateTime   // até quando pode enviar pick (geralmente = startAt)
+  status     GameStatus @default(SCHEDULED)
+
+  homeScore  Int?
+  awayScore  Int?
+
+  createdAt  DateTime   @default(now())
+  picks      Pick[]
+
+  @@index([roundId, startAt])
+}
+
+model Pick {
+  id            String       @id @default(cuid())
+  participantId String
+  gameId        String
+  participant   Participant  @relation(fields: [participantId], references: [id])
+  game          Game         @relation(fields: [gameId], references: [id])
+
+  pickWinner    String       // "HOME" ou "AWAY" (mais simples que team name)
+  pickMargin    MarginBucket
+
+  // computado quando o jogo ficar FINAL (pra leaderboard rápido)
+  winnerCorrect Boolean      @default(false)
+  marginCorrect Boolean      @default(false)
+  points        Int          @default(0)
+
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  @@unique([participantId, gameId])
+  @@index([gameId])
+  @@index([participantId])
+}
