@@ -387,7 +387,8 @@ export const ModelName = {
   Participant: 'Participant',
   Round: 'Round',
   Game: 'Game',
-  Pick: 'Pick'
+  Pick: 'Pick',
+  Teams: 'Teams'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -403,7 +404,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "participant" | "round" | "game" | "pick"
+    modelProps: "participant" | "round" | "game" | "pick" | "teams"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -703,6 +704,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Teams: {
+      payload: Prisma.$TeamsPayload<ExtArgs>
+      fields: Prisma.TeamsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TeamsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TeamsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamsPayload>
+        }
+        findFirst: {
+          args: Prisma.TeamsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TeamsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamsPayload>
+        }
+        findMany: {
+          args: Prisma.TeamsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamsPayload>[]
+        }
+        create: {
+          args: Prisma.TeamsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamsPayload>
+        }
+        createMany: {
+          args: Prisma.TeamsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TeamsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamsPayload>[]
+        }
+        delete: {
+          args: Prisma.TeamsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamsPayload>
+        }
+        update: {
+          args: Prisma.TeamsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamsPayload>
+        }
+        deleteMany: {
+          args: Prisma.TeamsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TeamsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TeamsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamsPayload>[]
+        }
+        upsert: {
+          args: Prisma.TeamsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamsPayload>
+        }
+        aggregate: {
+          args: Prisma.TeamsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTeams>
+        }
+        groupBy: {
+          args: Prisma.TeamsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TeamsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TeamsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TeamsCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -795,6 +870,15 @@ export const PickScalarFieldEnum = {
 } as const
 
 export type PickScalarFieldEnum = (typeof PickScalarFieldEnum)[keyof typeof PickScalarFieldEnum]
+
+
+export const TeamsScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  logo: 'logo'
+} as const
+
+export type TeamsScalarFieldEnum = (typeof TeamsScalarFieldEnum)[keyof typeof TeamsScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1016,6 +1100,7 @@ export type GlobalOmitConfig = {
   round?: Prisma.RoundOmit
   game?: Prisma.GameOmit
   pick?: Prisma.PickOmit
+  teams?: Prisma.TeamsOmit
 }
 
 /* Types for Logging */

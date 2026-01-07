@@ -59,3 +59,8 @@ export type Game = Prisma.GameModel
  * 
  */
 export type Pick = Prisma.PickModel
+/**
+ * Model Teams
+ * 
+ */
+export type Teams = Prisma.TeamsModel

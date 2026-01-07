@@ -1,9 +1,23 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import prisma from "@/lib/prisma";
 import { getSessionParticipant, requireAdmin } from "@/lib/auth";
 import { pointsForPick } from "@/lib/scoring";
 import { Participant } from "@/types/admin";
+import { cookies } from "next/headers";
+import { MarginBucket } from "@/types/marginBucket";
+
+
+const ALLOWED_MARGINS = ["M5", "M10", "M15", "M20", "M25PLUS"] as const;
+
+function toAppMarginBucket(v: unknown): MarginBucket {
+  const s = String(v);
+  if (!ALLOWED_MARGINS.includes(s as any)) {
+    throw new Error(`pickMargin inválido no banco: ${s}`);
+  }
+  return s as MarginBucket;
+}
 
 export async function createRound(input: { name: string; order: number }) {
   const me = await getSessionParticipant();
@@ -109,7 +123,8 @@ export async function finalizeGame(input: {
   const updates = game.picks.map((p) => {
     const res = pointsForPick({
       pickWinner: p.pickWinner as "HOME" | "AWAY",
-      pickMargin: p.pickMargin,
+      // ✅ converte do enum do Prisma -> seu type local
+      pickMargin: toAppMarginBucket(p.pickMargin),
       homeScore: input.homeScore,
       awayScore: input.awayScore,
     });
@@ -224,4 +239,20 @@ export async function updateParticipantFlags(input: {
   });
 
   return { ok: true };
+}
+
+
+export async function getTeams(){
+  return await prisma.teams.findMany({});
+}
+
+export async function getCurrentUser() {
+  const c = cookies();
+  const participantId = (await c).get("pc_pid")?.value; // ou como você salva
+  if (!participantId) return null;
+
+  return prisma.participant.findUnique({
+    where: { id: participantId },
+    select: { id: true, name: true, isAdmin: true },
+  });
 }

@@ -35,7 +35,7 @@ function LeaderTable({ rows }: { rows: Row[] }) {
 
   if (rows.length === 0) {
     return (
-      <p className="text-sm text-muted-foreground">
+      <p className="text-sm text-gray-200">
         Ainda não há pontuação (precisa de jogos finalizados).
       </p>
     );
@@ -44,19 +44,19 @@ function LeaderTable({ rows }: { rows: Row[] }) {
   return (
     <div className="rounded-lg border overflow-hidden">
       <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-18">#</TableHead>
-            <TableHead>Participante</TableHead>
-            <TableHead className="text-right">Pontos</TableHead>
+        <TableHeader >
+          <TableRow className="">
+            <TableHead className="w-18 text-gray-200">#</TableHead>
+            <TableHead className="text-gray-200">Participante</TableHead>
+            <TableHead className="text-right text-gray-200">Pontos</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {rows.map((r, idx) => (
             <TableRow key={r.participantId}>
-              <TableCell className="font-medium">{idx + 1}</TableCell>
+              <TableCell className="font-medium text-gray-200">{idx + 1}</TableCell>
               <TableCell className="flex items-center gap-2">
-                <span className="truncate">{r.name}</span>
+                <span className="truncate text-gray-200">{r.name}</span>
                 {r.participantId === topId ? (
                   <Badge className="gap-1">
                     <Crown className="h-3.5 w-3.5" />
@@ -73,7 +73,7 @@ function LeaderTable({ rows }: { rows: Row[] }) {
                   </Badge>
                 ) : null}
               </TableCell>
-              <TableCell className="text-right font-semibold">
+              <TableCell className="text-right font-semibold text-gray-200">
                 {r.points}
               </TableCell>
             </TableRow>
@@ -86,16 +86,19 @@ function LeaderTable({ rows }: { rows: Row[] }) {
 
 export function LeaderboardCard({ totalRows, byRound }: Props) {
   return (
-    <Card>
+    <Card className="bg-slate-500">
       <CardHeader className="pb-3">
-        <CardTitle className="text-base">Leaderboard</CardTitle>
+        <CardTitle className="text-base text-gray-200">Leaderboard</CardTitle>
       </CardHeader>
 
       <CardContent className="space-y-4">
         <Tabs defaultValue="total">
           <ScrollArea className="w-full">
-            <TabsList className="w-max flex flex-nowrap gap-2 whitespace-nowrap">
-              <TabsTrigger value="total" className="shrink-0 whitespace-nowrap">
+            <TabsList className="w-max flex flex-nowrap gap-2 whitespace-nowrap bg-slate-900/40 border border-white/10 mx-auto">
+              <TabsTrigger
+                value="total"
+                className="shrink-0 whitespace-nowrap data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=active]:shadow text-gray-200"
+              >
                 Geral
               </TabsTrigger>
 
@@ -103,7 +106,7 @@ export function LeaderboardCard({ totalRows, byRound }: Props) {
                 <TabsTrigger
                   key={r.roundId}
                   value={r.roundId}
-                  className="shrink-0 whitespace-nowrap"
+                  className="shrink-0 whitespace-nowrap data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=active]:shadow text-gray-200"
                 >
                   {r.roundName}
                 </TabsTrigger>

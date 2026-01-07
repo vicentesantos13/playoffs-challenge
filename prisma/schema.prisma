@@ -18,9 +18,7 @@ enum MarginBucket {
   M10
   M15
   M20
-  M25
-  M30
-  M30PLUS
+  M25PLUS
 }
 
 enum GameStatus {
@@ -87,4 +85,11 @@ model Pick {
   @@unique([participantId, gameId])
   @@index([gameId])
   @@index([participantId])
+}
+
+
+model Teams {
+  id String @id @default(uuid())
+  name String @unique
+  logo String
 }

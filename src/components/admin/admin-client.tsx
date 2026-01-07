@@ -1,17 +1,19 @@
 "use client";
 
-import { useMemo, useState, useTransition } from "react";
+import { useEffect, useMemo, useState, useTransition } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Game, Round } from "@/generated/prisma/client";
-import { Participant } from "@/types/admin";
+import { Participant, Team } from "@/types/admin";
 
 import { Rounds } from "./rounds";
 import { Games } from "./games";
 import { Finalize } from "./finalize";
 import { Participants } from "./participants";
+import { getTeams } from "@/services/admin";
+import { Game } from "@/types/game";
+import { Round } from "@/types/round";
 
 type RoundWithGames = Round & { games: Game[] };
 
@@ -49,7 +51,16 @@ export function AdminClient({
   );
   const scheduledGames = allGames.filter((g) => g.status === "SCHEDULED");
 
+  const [teams, setTeams] = useState<Team[]>([]);
   // --- Finalize scores (controlled inputs per game)
+
+  useEffect(() => {
+    const fetchTeams = async () => {
+      const res = await getTeams();
+      setTeams(res);
+    };
+    fetchTeams();
+  }, []);
 
   return (
     <Card>
@@ -107,6 +118,7 @@ export function AdminClient({
             setStartAt={setStartAt}
             gameRoundId={gameRoundId}
             setGameRoundId={setGameRoundId}
+            teams={teams}
           />
           {/* FINALIZE */}
           <Finalize pending={pending} scheduledGames={scheduledGames} />

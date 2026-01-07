@@ -13,7 +13,7 @@ export default async function LoginPage() {
 
   return (
     <main className="container mx-auto max-w-md px-4 py-10">
-      <Card>
+      <Card className="bg-slate-700 text-gray-200">
         <CardHeader>
           <CardTitle className="text-base">Entrar no Playoffs Challenge</CardTitle>
         </CardHeader>
@@ -38,7 +38,7 @@ export default async function LoginPage() {
               </p>
             </div>
 
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" variant={"secondary"}>
               Entrar
             </Button>
           </form>

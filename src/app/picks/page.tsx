@@ -1,21 +1,20 @@
 import { getActiveRoundWithGames } from "@/actions/leaderboard";
 import PicksClient from "@/components/picks-client";
 import { getSessionParticipant } from "@/lib/auth";
-import  prisma  from "@/lib/prisma";
+import { getTeams } from "@/services/admin";
+import { getMyPicks } from "@/services/picks";
 
 export default async function PicksPage() {
   const me = await getSessionParticipant();
   const round = await getActiveRoundWithGames();
 
-  const myPicks = me && round
-    ? await prisma.pick.findMany({
-        where: { participantId: me.id, game: { roundId: round.id } },
-      })
-    : [];
+  const teams = await getTeams();
+
+  const myPicks = await getMyPicks()
 
   return (
-    <main style={{ padding: 24, fontFamily: "system-ui" }}>
-      <PicksClient me={me} round={round} myPicks={myPicks} />
+    <main>
+      <PicksClient me={me} round={round} myPicks={myPicks} teams={teams} />
     </main>
   );
 }

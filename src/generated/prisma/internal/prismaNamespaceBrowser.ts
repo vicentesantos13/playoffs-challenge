@@ -54,7 +54,8 @@ export const ModelName = {
   Participant: 'Participant',
   Round: 'Round',
   Game: 'Game',
-  Pick: 'Pick'
+  Pick: 'Pick',
+  Teams: 'Teams'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -126,6 +127,15 @@ export const PickScalarFieldEnum = {
 } as const
 
 export type PickScalarFieldEnum = (typeof PickScalarFieldEnum)[keyof typeof PickScalarFieldEnum]
+
+
+export const TeamsScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  logo: 'logo'
+} as const
+
+export type TeamsScalarFieldEnum = (typeof TeamsScalarFieldEnum)[keyof typeof TeamsScalarFieldEnum]
 
 
 export const SortOrder = {

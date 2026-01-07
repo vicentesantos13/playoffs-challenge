@@ -1,7 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import prisma from "@/lib/prisma";
 import { pointsForPick } from "@/lib/scoring";
+import { MarginBucket } from "@/types/marginBucket";
+
+const ALLOWED_MARGINS = ["M5", "M10", "M15", "M20", "M25PLUS"] as const;
+
+function toAppMarginBucket(v: unknown): MarginBucket {
+  const s = String(v);
+  if (!ALLOWED_MARGINS.includes(s as any)) {
+    throw new Error(`pickMargin inválido no banco: ${s}`);
+  }
+  return s as MarginBucket;
+}
 
 export async function getLeaderboard(roundId?: string) {
   // soma points dos picks (se roundId, filtra)
@@ -70,7 +82,7 @@ export async function getLeaderboardAll() {
       for (const p of g.picks) {
         const res = pointsForPick({
           pickWinner: p.pickWinner as "HOME" | "AWAY",
-          pickMargin: p.pickMargin,
+          pickMargin: toAppMarginBucket(p.pickMargin),
           homeScore: g.homeScore!,
           awayScore: g.awayScore!,
         });

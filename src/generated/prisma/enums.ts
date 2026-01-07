@@ -14,9 +14,7 @@ export const MarginBucket = {
   M10: 'M10',
   M15: 'M15',
   M20: 'M20',
-  M25: 'M25',
-  M30: 'M30',
-  M30PLUS: 'M30PLUS'
+  M25PLUS: 'M25PLUS'
 } as const
 
 export type MarginBucket = (typeof MarginBucket)[keyof typeof MarginBucket]

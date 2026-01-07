@@ -1,10 +1,11 @@
-import { MarginBucket } from "@/generated/prisma/enums";
+import { MarginBucket } from "@/types/marginBucket";
+
 
 
 export function diffToBucket(diff: number): MarginBucket {
   const d = Math.abs(diff);
 
-  if (d >= 30) return "M30PLUS";
+  if (d >= 25) return "M25PLUS";
   if (d <= 0) return "M5"; // playoffs raramente empata; fallback
 
   // arredonda pra cima para múltiplo de 5
@@ -15,9 +16,7 @@ export function diffToBucket(diff: number): MarginBucket {
     case 10: return "M10";
     case 15: return "M15";
     case 20: return "M20";
-    case 25: return "M25";
-    case 30: return "M30";
-    default: return "M30PLUS";
+    default: return "M25PLUS";
   }
 }
 
@@ -54,7 +53,5 @@ export const marginOptions: { label: string; value: MarginBucket }[] = [
   { label: "10", value: "M10" },
   { label: "15", value: "M15" },
   { label: "20", value: "M20" },
-  { label: "25", value: "M25" },
-  { label: "30", value: "M30" },
-  { label: "30+", value: "M30PLUS" },
+  { label: "25+", value: "M25PLUS" },
 ];

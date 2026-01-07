@@ -1,8 +1,7 @@
 "use client";
 
-import {useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { updateGame } from "@/actions/admin";
-import type { Game, Round } from "@/generated/prisma/client";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,6 +21,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+
+import { Game } from "@/types/game";
+import { Round } from "@/types/round";
 
 function toDatetimeLocalValue(date: Date) {
   const d = new Date(date);
@@ -63,7 +65,7 @@ export function EditGameDialog({
       open={open}
       onOpenChange={(next) => {
         setOpen(next);
-        if (next) resetForm()
+        if (next) resetForm();
       }}
     >
       <DialogTrigger asChild>
