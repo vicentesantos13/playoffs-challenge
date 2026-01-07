@@ -17,7 +17,7 @@ export async function HomeHeader() {
       <div className="mx-auto max-w-5xl w-full px-4 pb-4 flex flex-col gap-3 ">
         {/* Title */}
         <div className="flex flex-col items-center  min-w-0">
-          <div className="bg-[url('/assets/brand/NFL_PB_LEAGUE_logo.png')] bg-contain bg-no-repeat bg-center w-40 h-60"></div>
+          <div className="bg-[url('/assets/brand/nfl-pb-league-logo.png')] bg-contain bg-no-repeat bg-center w-40 h-60"></div>
 
           <div className="min-w-0">
             <h1 className="font-semibold leading-tight truncate text-white text-center text-3xl">

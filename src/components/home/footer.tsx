@@ -15,7 +15,7 @@ export function Footer() {
 
           <div className="flex items-center gap-2">
             <span className="text-xs text-muted-foreground">Powered by</span>
-            <div className="bg-[url('/assets/brand/LG_MV_logo.png')] bg-contain bg-no-repeat bg-center w-20 h-20"></div>
+            <div className="bg-[url('/assets/brand/lg-mv-logo.png')] bg-contain bg-no-repeat bg-center w-20 h-20"></div>
           </div>
         </div>
       </div>
