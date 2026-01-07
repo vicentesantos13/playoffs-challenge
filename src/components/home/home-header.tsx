@@ -50,16 +50,32 @@ export async function HomeHeader() {
               </Link>
             </Button>
 
-            <Button
-              asChild
-              variant="secondary"
-              className="gap-2 w-full lg:w-auto"
-            >
-              <Link href="/picks">
-                <ListChecks className="h-4 w-4" />
-                Apostas
-              </Link>
-            </Button>
+            {user && (
+              <Button
+                asChild
+                variant="secondary"
+                className="gap-2 w-full lg:w-auto"
+              >
+                <Link href="/picks">
+                  <ListChecks className="h-4 w-4" />
+                  Apostas
+                </Link>
+              </Button>
+            )}
+
+            {!user && (
+              <Button
+                asChild
+                variant="secondary"
+                className="gap-2 w-full lg:w-auto"
+              >
+                <Link href="/login">
+                  Login
+                </Link>
+              </Button>
+            )}
+
+
 
             <Button
               asChild
