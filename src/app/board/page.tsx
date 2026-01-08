@@ -251,7 +251,7 @@ export default async function BoardPage() {
                         Ninguém apostou neste jogo ainda.
                       </p>
                     ) : (
-                      <div className="rounded-lg border overflow-scroll">
+                      <div className="rounded-lg border overflow-scroll md:overflow-hidden">
                         <table className="w-full text-sm">
                           <thead className="bg-slate-300">
                             <tr className="text-left text-gray-600">
