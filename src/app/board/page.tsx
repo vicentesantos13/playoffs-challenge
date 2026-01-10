@@ -22,6 +22,7 @@ function toAppMarginBucket(v: unknown): MarginBucket {
 
 function fmt(dt: Date) {
   return new Intl.DateTimeFormat("pt-BR", {
+    timeZone:"America/Fortaleza",
     dateStyle: "short",
     timeStyle: "short",
   }).format(new Date(dt));

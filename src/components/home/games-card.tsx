@@ -14,6 +14,7 @@ type Props = {
 
 function formatDate(dt: Date) {
   return new Intl.DateTimeFormat("pt-BR", {
+    timeZone: "America/Fortaleza",
     dateStyle: "short",
     timeStyle: "short",
   }).format(dt);
@@ -80,10 +81,6 @@ export function GamesCard({ games, teams = [] }: Props) {
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
                       <div className="flex items-center gap-2 min-w-0">
-                        
-
-                        
-
                         {away ? (
                           <TeamChip name={away.name} logo={away.logo} />
                         ) : (
@@ -92,9 +89,7 @@ export function GamesCard({ games, teams = [] }: Props) {
                           </span>
                         )}
 
-                        <span className="text-gray-200 shrink-0">
-                          @
-                        </span>
+                        <span className="text-gray-200 shrink-0">@</span>
 
                         {home ? (
                           <TeamChip name={home.name} logo={home.logo} />
@@ -108,12 +103,18 @@ export function GamesCard({ games, teams = [] }: Props) {
                       {statusBadge(g.status)}
 
                       {locked || g.status === "FINAL" ? (
-                        <Badge variant="outline" className="gap-1 text-gray-200">
+                        <Badge
+                          variant="outline"
+                          className="gap-1 text-gray-200"
+                        >
                           <Lock className="h-3.5 w-3.5" />
                           Travado
                         </Badge>
                       ) : (
-                        <Badge variant="outline" className="gap-1 text-gray-200">
+                        <Badge
+                          variant="outline"
+                          className="gap-1 text-gray-200"
+                        >
                           <Clock className="h-3.5 w-3.5" />
                           Aberto
                         </Badge>
