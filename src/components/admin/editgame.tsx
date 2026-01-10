@@ -149,12 +149,14 @@ export function EditGameDialog({
             }
             onClick={() => {
               startTransition(async () => {
+                if (!startAt) return;
+                const startAtISO = new Date(startAt).toISOString();
                 await updateGame({
                   gameId: game.id,
                   roundId,
                   homeTeam,
                   awayTeam,
-                  startAtISO: startAt,
+                  startAtISO,
                 });
                 setOpen(false);
                 location.reload();

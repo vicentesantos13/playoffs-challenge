@@ -255,12 +255,14 @@ export const Games = ({
               disabled={!canCreate}
               onClick={() => {
                 startTransition(async () => {
+                  if(!startAt) return;
+                  const startAtISO = new Date(startAt).toISOString();
                   await createGame({
                     roundId: gameRoundId,
                     homeTeam, // string (nome)
                     awayTeam, // string (nome)
-                    startAtISO: startAt,
-                    lockAtISO: startAt,
+                    startAtISO,
+                    lockAtISO: startAtISO,
                   });
                   location.reload();
                 });
